@@ -1,0 +1,140 @@
+openapi: 3.0.3
+info:
+  title: Task Board API
+  version: 0.1.0
+  description: Shared task board — list, create, and complete tasks.
+servers:
+  - url: /
+paths:
+  /tasks:
+    parameters:
+      - $ref: '#/components/parameters/UserId'
+    get:
+      operationId: listTasks
+      summary: List all tasks on the board
+      parameters:
+        - name: limit
+          in: query
+          schema: { type: integer, default: 20, maximum: 100 }
+        - name: offset
+          in: query
+          schema: { type: integer, default: 0 }
+      responses:
+        '200':
+          description: page of tasks
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [count, data]
+                properties:
+                  count: { type: integer, description: total matching tasks }
+                  next: { type: string, nullable: true, description: relative URI of the next page }
+                  previous: { type: string, nullable: true, description: relative URI of the previous page }
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Task' }
+        '401':
+          description: missing or invalid token
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+    post:
+      operationId: createTask
+      summary: Create a new task (Admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/NewTask' }
+      responses:
+        '201':
+          description: task created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Task' }
+        '400':
+          description: invalid task
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '401':
+          description: missing or invalid token
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '403':
+          description: caller is not an Admin
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /tasks/{taskId}/complete:
+    parameters:
+      - $ref: '#/components/parameters/UserId'
+      - $ref: '#/components/parameters/TaskId'
+    post:
+      operationId: completeTask
+      summary: Mark a task complete (Admin only)
+      responses:
+        '200':
+          description: task marked complete
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Task' }
+        '401':
+          description: missing or invalid token
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '403':
+          description: caller is not an Admin
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: task not found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+components:
+  parameters:
+    UserId:
+      name: X-User-Id
+      in: header
+      required: true
+      description: caller identity injected by the gateway from the validated token
+      schema: { type: string }
+    TaskId:
+      name: taskId
+      in: path
+      required: true
+      description: task identifier
+      schema: { type: string }
+  schemas:
+    Task:
+      type: object
+      required: [id, title, completed, createdBy, createdAt]
+      properties:
+        id: { type: string }
+        title: { type: string }
+        completed: { type: boolean }
+        createdBy: { type: string, description: user id of the Admin who created it }
+        createdAt: { type: string, format: date-time }
+        completedAt: { type: string, format: date-time, nullable: true }
+    NewTask:
+      type: object
+      required: [title]
+      properties:
+        title: { type: string }
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code: { type: integer, description: HTTP or application error code }
+        message: { type: string, description: short human-readable label }
+        description: { type: string, description: detailed explanation }
+        moreInfo: { type: string, description: URI to documentation }
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer, bearerFormat: JWT }
+security:
+  - bearerAuth: []

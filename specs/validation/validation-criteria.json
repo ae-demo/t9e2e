@@ -1,0 +1,58 @@
+{
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "statement": "A Viewer can sign in with their organizational account to access the task board",
+      "stories": [1],
+      "criteria": [
+        { "id": "AC-001-a", "must": "An unauthenticated visitor is directed to sign in before seeing the board", "method": "e2e" },
+        { "id": "AC-001-b", "must": "A Viewer who signs in successfully reaches the task board", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-002",
+      "statement": "A Viewer can see the full list of tasks and whether each is complete",
+      "stories": [2],
+      "criteria": [
+        { "id": "AC-002-a", "must": "The task board shows every task in the system to a signed-in Viewer", "method": "e2e" },
+        { "id": "AC-002-b", "must": "Each task's complete/not-complete status is visibly displayed", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-003",
+      "statement": "An Admin can sign in with their organizational account to manage tasks",
+      "stories": [3],
+      "criteria": [
+        { "id": "AC-003-a", "must": "An Admin who signs in successfully reaches the task board", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-004",
+      "statement": "An Admin can create a new task with a title that appears on the board for everyone",
+      "stories": [4],
+      "criteria": [
+        { "id": "AC-004-a", "must": "An Admin can submit a new task with a title", "method": "e2e" },
+        { "id": "AC-004-b", "must": "A newly created task appears in the task list visible to Viewers", "method": "e2e" },
+        { "id": "AC-004-c", "must": "A Viewer cannot create a new task", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-005",
+      "statement": "An Admin can see the full list of tasks and their status to decide what needs attention",
+      "stories": [5],
+      "criteria": [
+        { "id": "AC-005-a", "must": "The task board shows every task and its status to a signed-in Admin", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-006",
+      "statement": "An Admin can mark a task as complete, updating the board for everyone",
+      "stories": [6],
+      "criteria": [
+        { "id": "AC-006-a", "must": "An Admin can mark an open task as complete", "method": "e2e" },
+        { "id": "AC-006-b", "must": "A task marked complete by an Admin shows as complete to a Viewer", "method": "e2e" },
+        { "id": "AC-006-c", "must": "A Viewer cannot mark a task as complete", "method": "e2e" }
+      ]
+    }
+  ]
+}

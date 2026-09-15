@@ -1,0 +1,17 @@
+{
+  "name": "t9e2e-api",
+  "type": "service",
+  "version": "0.1.0",
+  "language": "Go",
+  "buildpack": "docker",
+  "appPath": "t9e2e-api",
+  "entrypoint": "deployment/service",
+  "exposure": "intranet",
+  "dependencies": [
+    { "kind": "platform-resource", "name": "t9e2e-db", "resourceType": "postgres-cnpg", "description": "Stores tasks (title, completed state, creator, timestamps)." },
+    { "kind": "platform-resource", "name": "user-auth", "resourceType": "thunder-app", "description": "Validates the caller's token and resolves their role for authorization." }
+  ],
+  "description": "Go API backed by Postgres for the shared task board. Lets any signed-in user list tasks, and lets Admins create tasks and mark them complete. Validates the caller's Thunder token on every request and enforces the Viewer/Admin role split. Does not serve the web app's UI.",
+  "stories": [1, 2, 3, 4, 5, 6],
+  "skillsPinned": ["openapi-conventions", "go", "api-management", "thunder-authentication"]
+}

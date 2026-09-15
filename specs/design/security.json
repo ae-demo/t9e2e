@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "coldStartRole": "Viewer",
+  "publicComponents": [],
+  "roles": [
+    {
+      "name": "Viewer",
+      "description": "Signs in and sees the shared task board.",
+      "stories": [1, 2],
+      "grantedBy": "first sign-in",
+      "permissions": [
+        { "component": "t9e2e-api", "actions": ["list tasks"] },
+        { "component": "t9e2e-webapp", "screens": ["Task Board"] }
+      ]
+    },
+    {
+      "name": "Admin",
+      "description": "Creates tasks and marks them complete on the shared board.",
+      "stories": [3, 4, 5, 6],
+      "grantedBy": "Admin",
+      "permissions": [
+        { "component": "t9e2e-api", "actions": ["list tasks", "create task", "complete task"] },
+        { "component": "t9e2e-webapp", "screens": ["Task Board"] }
+      ]
+    }
+  ],
+  "testUsers": [
+    { "username": "test-viewer", "role": "Viewer" },
+    { "username": "test-admin", "role": "Admin" }
+  ],
+  "thunder": {
+    "name": "Task Board",
+    "type": "browser",
+    "scopes": "openid profile email group ou"
+  }
+}

@@ -1,0 +1,14 @@
+title t9e2e — Task Board
+
+component t9e2e-webapp as "Task Board" web-application
+component t9e2e-api as "Task Board API" service
+component t9e2e-db as "Task Board DB" database
+
+east user-auth as "Thunder Auth" identity-server
+
+north -> t9e2e-webapp
+
+t9e2e-webapp -> t9e2e-api
+t9e2e-webapp -> user-auth
+t9e2e-api -> user-auth
+t9e2e-api -> t9e2e-db
