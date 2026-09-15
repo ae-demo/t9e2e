@@ -24,17 +24,17 @@ marks tasks complete.
 ## User Stories
 
 1. As a Viewer, I want to sign in with my organizational account, so that I
- can access the task board.
+can access the task board.
 2. As a Viewer, I want to see the full list of tasks and whether each is
- complete, so that I know the current state of the team's work.
+complete, so that I know the current state of the team's work.
 3. As an Admin, I want to sign in with my organizational account, so that I
- can manage tasks.
+can manage tasks.
 4. As an Admin, I want to create a new task with a title, so that it appears
- on the board for everyone to see.
+on the board for everyone to see.
 5. As an Admin, I want to see the full list of tasks and whether each is
- complete, so that I can decide what still needs attention.
+complete, so that I can decide what still needs attention.
 6. As an Admin, I want to mark a task as complete, so that the board reflects
- up-to-date status for everyone.
+up-to-date status for everyone.
 
 ## Product Decisions
 
