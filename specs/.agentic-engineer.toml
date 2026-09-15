@@ -1,0 +1,4 @@
+apiVersion = "agentic-engineer/v1"
+name = "t9e2e"
+createdAt = "2026-09-15T15:30:16Z"
+idea = "Build project t9e2e: a small internal task board with a React web app and a Go API backed by postgres. People must sign in. Roles: Viewer (see tasks) and Admin (create and complete tasks). Seed test users for both roles. Use Thunder for end-user authentication on both the web app and the API."
