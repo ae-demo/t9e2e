@@ -7,11 +7,55 @@
   "appPath": "t9e2e-api",
   "entrypoint": "deployment/service",
   "exposure": "intranet",
-  "dependencies": [
-    { "kind": "platform-resource", "name": "t9e2e-db", "resourceType": "postgres-cnpg", "description": "Stores tasks (title, completed state, creator, timestamps)." },
-    { "kind": "platform-resource", "name": "user-auth", "resourceType": "thunder-app", "description": "Validates the caller's token and resolves their role for authorization." }
+  "stories": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
   ],
   "description": "Go API backed by Postgres for the shared task board. Lets any signed-in user list tasks, and lets Admins create tasks and mark them complete. Validates the caller's Thunder token on every request and enforces the Viewer/Admin role split. Does not serve the web app's UI.",
-  "stories": [1, 2, 3, 4, 5, 6],
-  "skillsPinned": ["openapi-conventions", "go", "api-management", "thunder-authentication"]
+  "dependencies": [
+    {
+      "kind": "platform-resource",
+      "name": "t9e2e-db",
+      "description": "Stores tasks (title, completed state, creator, timestamps).",
+      "resourceType": "postgres-cnpg",
+      "wiring": {
+        "ref": "t9e2e-t9e2e-db",
+        "envBindings": {
+          "dbname": "T9E2E_DB_DBNAME",
+          "host": "T9E2E_DB_HOST",
+          "password": "T9E2E_DB_PASSWORD",
+          "port": "T9E2E_DB_PORT",
+          "user": "T9E2E_DB_USER"
+        }
+      }
+    },
+    {
+      "kind": "platform-resource",
+      "name": "user-auth",
+      "description": "Validates the caller's token and resolves their role for authorization.",
+      "resourceType": "thunder-app",
+      "wiring": {
+        "ref": "t9e2e-user-auth",
+        "envBindings": {
+          "client_id": "USER_AUTH_CLIENT_ID",
+          "issuer": "USER_AUTH_ISSUER",
+          "jwks_url": "USER_AUTH_JWKS_URL",
+          "scopes": "USER_AUTH_SCOPES"
+        }
+      }
+    }
+  ],
+  "exposesAPI": {
+    "auth": "end-user-required"
+  },
+  "skillsPinned": [
+    "openapi-conventions",
+    "go",
+    "api-management",
+    "thunder-authentication"
+  ]
 }
