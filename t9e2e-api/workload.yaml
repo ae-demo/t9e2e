@@ -1,0 +1,29 @@
+apiVersion: openchoreo.dev/v1alpha1
+metadata:
+  name: t9e2e-api
+
+endpoints:
+  - name: http
+    type: HTTP
+    port: 9090
+    basePath: /
+    visibility:
+      - project
+      - internal
+      - external
+
+dependencies:
+  resources:
+    - ref: t9e2e-t9e2e-db
+      envBindings:
+        dbname: T9E2E_DB_DBNAME
+        host: T9E2E_DB_HOST
+        password: T9E2E_DB_PASSWORD
+        port: T9E2E_DB_PORT
+        user: T9E2E_DB_USER
+    - ref: t9e2e-user-auth
+      envBindings:
+        client_id: USER_AUTH_CLIENT_ID
+        issuer: USER_AUTH_ISSUER
+        jwks_url: USER_AUTH_JWKS_URL
+        scopes: USER_AUTH_SCOPES
